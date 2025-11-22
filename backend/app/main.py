@@ -20,7 +20,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from app.routers import upload, analyze
+
 app.include_router(upload.router, prefix="/api/v1", tags=["upload"])
+app.include_router(analyze.router, prefix="/api/v1", tags=["analyze"])
 
 @app.get("/")
 def read_root():

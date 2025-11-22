@@ -176,3 +176,139 @@ Le plan décrit les fichiers à fournir pour un démarrage rapide : backend Fast
 ## Prochaine étape recommandée
 
 - Générer les fichiers de démarrage dans le dépôt et lancer un test local via Docker Compose.
+
+---
+
+## 📋 RÉSUMÉ DE L'AVANCEMENT (22 Nov 2025)
+
+### ✅ Ce qui a été accompli
+
+#### Phase 1 : Socle technique (TERMINÉ ✅)
+
+**Structure complète créée :**
+- ✅ Backend FastAPI avec tous les fichiers de base
+  - `backend/app/main.py` : API avec CORS configuré pour VPS (168.231.77.11:5173)
+  - `backend/app/core/config.py` : Gestion des variables d'environnement
+  - `backend/app/routers/upload.py` : Endpoint `/api/v1/upload` opérationnel
+  - Services stubs créés : `pdf_extractor.py`, `llm_classifier_ollama.py`, `budget_vert_taxonomy.py`
+  - `requirements.txt` : Dépendances (FastAPI, pdfplumber, pymupdf, httpx, etc.)
+
+- ✅ Frontend React + Vite + TypeScript
+  - Structure complète avec Tailwind CSS
+  - `frontend/src/App.tsx` : Interface d'accueil
+  - Configuration TypeScript stricte
+  - PostCSS + Autoprefixer configurés
+
+- ✅ Docker & Orchestration
+  - `docker-compose.yml` : 3 services (Ollama sur port 11435, Backend 8000, Frontend 5173)
+  - Dockerfiles pour backend et frontend
+  - Volume persistant pour modèles Ollama
+
+- ✅ Données
+  - `data/taxonomie_budget_vert_cab.json` : Taxonomie budget vert avec 3 catégories (V1, V2, V3) et exclusions
+
+#### Déploiement VPS (TERMINÉ ✅)
+
+**VPS de test configuré (168.231.77.11) :**
+- ✅ Code poussé sur GitHub : `jfcwebcraft/ECOBUDGET-CAB-Communaut-d-Agglomeration-du-Boulonnais`
+- ✅ Clone et build réussi sur le VPS Ubuntu 24.04
+- ✅ 3 conteneurs Docker actifs :
+  - `ollama_1` : Service IA local (port 11435)
+  - `backend_1` : API FastAPI (port 8000)
+  - `frontend_1` : Interface React (port 5173)
+
+**URLs opérationnelles :**
+- Frontend : http://168.231.77.11:5173 ✅
+- Backend API : http://168.231.77.11:8000/docs ✅
+
+### 🚧 État actuel par rapport à la roadmap
+
+| Phase | Statut | Détails |
+|-------|--------|---------|
+| **Semaine 1-2 : Socle technique** | ✅ **TERMINÉ** | Backend, Frontend, Docker, Taxonomie, Déploiement VPS |
+| **Semaine 3-4 : Extraction** | ⏳ **À FAIRE** | `pdf_extractor.py` est un stub, pas d'implémentation pdfplumber |
+| **Semaine 5-7 : Classification IA** | ⏳ **À FAIRE** | `llm_classifier_ollama.py` est un stub, Ollama sans modèle téléchargé |
+| **Semaine 8-10 : Interface & validation** | ⏳ **À FAIRE** | Pas de composants d'upload, tableau, ni export Excel |
+| **Semaine 11-12 : Production** | ⏳ **À FAIRE** | SQLite, statistiques, exports comptables à venir |
+
+### 🎯 Prochaines étapes immédiates
+
+#### 1. Préparation Ollama (Critique pour la classification)
+```bash
+# Sur le VPS
+docker exec -it ecobudget-cab-communaut-d-agglomeration-du-boulonnais_ollama_1 ollama pull mistral
+```
+
+#### 2. Implémentation Extraction PDF (Semaine 3-4)
+- Compléter `backend/app/services/pdf_extractor.py` avec pdfplumber
+- Extraire texte et tableaux des devis PDF
+- Normaliser les lignes (désignation, montant HT)
+- Ajouter fallback OCR (Tesseract) si nécessaire
+
+#### 3. Interface d'Upload (Semaine 8)
+Créer dans `frontend/src/components/` :
+- `UploadZone.tsx` : Zone de drag & drop pour PDF
+- Connecter à l'endpoint `/api/v1/upload` existant
+- Afficher le statut d'upload et les erreurs
+
+#### 4. Classification IA (Semaine 5-7)
+- Implémenter `llm_classifier_ollama.py` avec le SYSTEM_PROMPT défini
+- Intégrer la taxonomie JSON
+- Valider le format de sortie JSON strict
+- Tests avec exemples de devis
+
+### 📂 Fichiers clés créés
+
+**Code source :**
+- Backend : 10 fichiers Python (main, config, routers, services)
+- Frontend : 12 fichiers TypeScript/React + config
+- Infrastructure : 3 fichiers (docker-compose, Dockerfiles, .env.example)
+- Données : 1 fichier JSON (taxonomie)
+
+**Scripts utilitaires :**
+- `deploy_vps.ps1` : Script de déploiement SSH (non utilisé finalement)
+- `upload_helper.ps1` : Script d'upload vers services tiers (non utilisé finalement)
+- **Méthode finale retenue** : Git clone depuis GitHub
+
+**Documentation :**
+- `README.md` : Guide de démarrage
+- `.gemini/antigravity/brain/*/walkthrough.md` : Documentation détaillée du déploiement
+
+### 🔧 Commandes de maintenance VPS
+
+**Mettre à jour le code :**
+```bash
+cd /root/ECOBUDGET-CAB-Communaut-d-Agglomeration-du-Boulonnais
+git pull origin main
+docker-compose down
+docker-compose up -d --build
+```
+
+**Voir les logs :**
+```bash
+docker logs -f ecobudget-cab-communaut-d-agglomeration-du-boulonnais_backend_1
+docker logs -f ecobudget-cab-communaut-d-agglomeration-du-boulonnais_frontend_1
+```
+
+### 💡 Notes importantes
+
+- Le port Ollama a été changé de 11434 → 11435 pour éviter les conflits avec l'instance Ollama existante sur le VPS
+- Le VPS héberge déjà d'autres projets (AnythingLLM, n8n, Traefik, PostgreSQL, etc.)
+- Le dépôt GitHub a été temporairement rendu public pour faciliter le clone initial
+- CORS configuré pour accepter les requêtes depuis l'IP du VPS
+
+### 🎓 Leçons apprises durant le déploiement
+
+1. **SSH bloqué** : Connexion refusée malgré le bon mot de passe → solution Git clone HTTPS
+2. **Services d'upload bloqués** : transfer.sh et file.io inaccessibles → solution GitHub
+3. **Importance de la persistance** : Volume `ollama_models` créé pour éviter de re-télécharger les modèles
+
+---
+
+## Prochaine étape recommandée
+
+**Option A (Rapide - Test fonctionnel) :** Créer l'interface d'upload pour tester le flux complet sans IA
+
+**Option B (Complet - Fondations solides) :** Implémenter l'extraction PDF pour avoir des données réelles à classifier
+
+**Option C (IA d'abord) :** Télécharger Mistral et implémenter la classification, tester avec des données mock
