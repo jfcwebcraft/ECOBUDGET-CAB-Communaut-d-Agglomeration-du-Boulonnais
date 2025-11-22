@@ -1,0 +1,178 @@
+﻿# ECOBUDGET-CAB  Plan d'implémentation
+
+## Objectif
+
+Construire un outil local (RGPD-friendly) pour :
+
+- extraire les lignes de devis PDF (texte & tableaux),
+- identifier automatiquement les lignes éligibles au  budget vert  (dépenses favorables au climat / biodiversité),
+- permettre la validation humaine et produire des exports Excel/CSV.
+
+## Contraintes principales
+
+- Exécution 100 % locale  Ollama retenu pour l'analyse IA (pas de fuite de données).
+- Coût opérationnel faible, maintien par la DSI locale.
+- Interface simple pour validation humaine et export pour la comptabilité.
+
+## Arborescence recommandée
+
+ECOBUDGET-CAB-Communaut-d'Agglomeration-du-Boulonnais/
+
+- backend/
+  - app/
+    - main.py
+    - routers/upload.py
+    - services/
+      - pdf_extractor.py
+      - llm_classifier_ollama.py
+      - budget_vert_taxonomy.py
+    - core/config.py
+  - requirements.txt
+
+- frontend/ (React + Vite + TypeScript)
+  - src/
+    - components/ (UploadZone, DevisTable, ClassificationBadge)
+    - pages/ (Home, DevisDetail)
+    - services/api.ts
+    - App.tsx
+  - vite.config.ts
+
+- data/
+  - taxonomie_budget_vert_cab.json
+  - exemples_devis_anonymises/
+
+- .env.example
+- docker-compose.yml
+- README.md
+
+## Choix techniques (résumé)
+
+- Backend : FastAPI (Python).
+- IA locale : Ollama  modèles en local, RGPD-friendly.
+- Extraction PDF/OCR : pdfplumber + PyMuPDF ; Tesseract en fallback.
+- Frontend : React + Vite + TypeScript (+ Tailwind pour la UI).
+- Base : SQLite en dev, PostgreSQL en production.
+
+## Roadmap (synthèse)
+
+### Semaine 1–2 — Socle technique
+
+- Initialiser backend FastAPI, frontend Vite, CORS/proxy et upload.
+
+### Semaine 3–4 — Extraction
+
+- Extraire texte/tableaux (pdfplumber). Fallback OCR si besoin (Tesseract).
+- Normaliser lignes (désignation, montant HT).
+
+### Semaine 5–7 — Classification IA
+
+- Définir taxonomie (JSON/Excel).
+- Construire prompts/few-shot, intégrer Ollama.
+
+### Semaine 8–10 — Interface & validation
+
+- Tableau éditable, correction manuelle, historique et export Excel.
+
+### Semaine 11–12 — Production
+
+- Statistiques, comparatifs annuels, intégrations d'export.
+- Export Excel final avec 2 onglets (Total + Budget Vert) et formules de contrôle (somme/autocheck) — validé par la compta.
+ Historique des devis traités stocké en SQLite (traçabilité exigée par RGPD).
+- Bouton "Valider et transmettre à Astre/Ciril" → génère CSV au format du logiciel financier (préparation transmission comptable).
+
+## Exemple de taxonomie (data/taxonomie_budget_vert_cab.json)
+ 
+ Règles :
+ 
+ Si doute → budget_vert = false.
+ Exclure dépenses non-vertes (ex. : climatisation, gazon synthétique, carburants, éclairage halogène, véhicules thermiques).
+  "version": "2025-CAB",
+  "categories": [
+    {"code": "V1", "nom": "Performance énergétique bâtiments", "mots_cles": ["isolation","pompe à chaleur","chaudière biomasse","rénovation thermique","LED"]},
+    {"code": "V2", "nom": "Mobilité douce & décarbonée", "mots_cles": ["vélo","piste cyclable","borne IRVE","véhicule électrique"]},
+    {"code": "V3", "nom": "Biodiversité & adaptation", "mots_cles": ["plantation","désimperméabilisation","gestion différenciée"]}
+  ],
+  "exclusions": ["climatisation","gazon synthétique","éclairage halogène","carburant"]
+}
+
+## Prompt  format de sortie (JSON strict)
+
+SYSTEM_PROMPT (exemple) :
+
+Tu es un agent comptable expert du budget vert de la Communauté d’Agglomération du Boulonnais.
+Tu appliques la méthodologie nationale 2025 (Ademe/I4CE) + les règles spécifiques CAB.
+
+Règles ABSOLUES :
+- Doute → budget_vert = false
+- Exclure systématiquement : climatisation, gazon synthétique, véhicules thermiques, éclairage non LED, désherbant chimique, carburant
+- N’inclure que les dépenses DIRECTEMENT favorables au climat OU à la biodiversité
+
+Réponds EXACTEMENT avec une liste JSON (rien d’autre, pas de ```json) :
+
+[
+  {"ligne":"Isolation extérieure 200mm","montant_ht":15420.00,"budget_vert":true,"code_categorie":"V1","confiance":0.98,"explication":"Rénovation thermique performante"},
+  {"ligne":"Climatisation réversible","montant_ht":8900.00,"budget_vert":false,"code_categorie":null,"confiance":1.00,"explication":"Refroidissement actif → exclus du budget vert"}
+]
+
+## Intégration Ollama — points pratiques
+
+- Héberger Ollama localement (Docker), monter `./ollama_models` pour persistance.
+- Envoyer le SYSTEM_PROMPT + lignes à classifier via l'API de chat d'Ollama.
+- Valider strictement la sortie JSON côté backend avant ingestion.
+
+## Extraits utilitaires
+
+### docker-compose (extrait minimal)
+
+```yaml
+version: '3.9'
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports: ["11434:11434"]
+    volumes: ["./ollama_models:/root/.ollama"]
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    depends_on: [ollama]
+    volumes: ["./backend:/app","./data:/data"]
+    environment: ["OLLAMA_HOST=http://ollama:11434"]
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports: ["5173:5173"]
+    depends_on: [backend]
+    restart: unless-stopped
+```
+
+### Commandes (PowerShell)
+
+```powershell
+cd backend
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+```powershell
+docker-compose up --build
+```
+
+
+## Fichiers d'amorçage
+
+Le plan décrit les fichiers à fournir pour un démarrage rapide : backend FastAPI, services d'extraction & classification (Ollama), frontend minimal, Dockerfiles et docker-compose.
+
+## Prochaine étape recommandée
+
+- Générer les fichiers de démarrage dans le dépôt et lancer un test local via Docker Compose.

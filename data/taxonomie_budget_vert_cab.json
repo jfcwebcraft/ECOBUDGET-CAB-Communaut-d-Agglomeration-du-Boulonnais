@@ -1,0 +1,41 @@
+{
+    "version": "2025-CAB",
+    "categories": [
+        {
+            "code": "V1",
+            "nom": "Performance énergétique bâtiments",
+            "mots_cles": [
+                "isolation",
+                "pompe à chaleur",
+                "chaudière biomasse",
+                "rénovation thermique",
+                "LED"
+            ]
+        },
+        {
+            "code": "V2",
+            "nom": "Mobilité douce & décarbonée",
+            "mots_cles": [
+                "vélo",
+                "piste cyclable",
+                "borne IRVE",
+                "véhicule électrique"
+            ]
+        },
+        {
+            "code": "V3",
+            "nom": "Biodiversité & adaptation",
+            "mots_cles": [
+                "plantation",
+                "désimperméabilisation",
+                "gestion différenciée"
+            ]
+        }
+    ],
+    "exclusions": [
+        "climatisation",
+        "gazon synthétique",
+        "éclairage halogène",
+        "carburant"
+    ]
+}
