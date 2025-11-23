@@ -1,9 +1,9 @@
 # backend/app/services/pdf_extractor.py
 import pdfplumber
 import re
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
-def clean_amount(text: str) -> float | None:
+def clean_amount(text: str) -> Optional[float]:
     """Extrait un montant HT depuis du texte brut"""
     if not text:
         return None
