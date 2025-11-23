@@ -33,7 +33,7 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
             resp = await client.post(
                 "http://ollama:11434/api/chat",  # Port interne Docker (toujours 11434)
                 json={
-                    "model": "mistral",
+                    "model": "phi3",
                     "messages": [
                         {"role": "system", "content": SYSTEM_PROMPT},
                         {"role": "user", "content": user_message}
