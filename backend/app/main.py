@@ -6,11 +6,7 @@ from app.routers import upload
 app = FastAPI(title=settings.PROJECT_NAME)
 
 # Configuration CORS
-origins = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://168.231.77.11:5173",  # VPS Frontend
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
