@@ -42,16 +42,20 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
                     "format": "json",
                     "options": {
                         "temperature": 0.1,
-                        "num_ctx": 8192
+                        "num_ctx": 2048  # Réduit pour économiser la RAM (8192 -> 2048)
                     }
                 }
             )
+            if resp.status_code != 200:
+                print(f"Erreur HTTP Ollama: {resp.status_code} - {resp.text}")
+            
             resp.raise_for_status()
             content = resp.json()["message"]["content"]
 
             # Nettoyage strict du JSON
             json_match = re.search(r'\[.*\]', content, re.DOTALL)
             if not json_match:
+                print(f"Réponse Ollama invalide (pas de JSON): {content}")
                 raise ValueError("Pas de JSON trouvé")
             
             result = json.loads(json_match.group(0))
@@ -66,7 +70,9 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
             return result
 
         except Exception as e:
-            print(f"Erreur Ollama : {e}")
+            print(f"EXCEPTION CRITIQUE OLLAMA : {str(e)}")
+            import traceback
+            traceback.print_exc()
             # Fallback minimal
             return [
                 {
