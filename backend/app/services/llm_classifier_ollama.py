@@ -52,13 +52,32 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
             resp.raise_for_status()
             content = resp.json()["message"]["content"]
 
-            # Nettoyage strict du JSON
-            json_match = re.search(r'\[.*\]', content, re.DOTALL)
-            if not json_match:
+            # Nettoyage et extraction flexible du JSON
+            # 1. Chercher une liste JSON [...]
+            json_match_list = re.search(r'\[.*\]', content, re.DOTALL)
+            
+            # 2. Chercher un objet JSON unique {...} (si le LLM oublie la liste)
+            json_match_obj = re.search(r'\{.*\}', content, re.DOTALL)
+
+            if json_match_list:
+                try:
+                    result = json.loads(json_match_list.group(0))
+                except json.JSONDecodeError:
+                    # Fallback si la liste est mal formée, on essaie l'objet
+                    if json_match_obj:
+                        result = [json.loads(json_match_obj.group(0))]
+                    else:
+                        raise
+            elif json_match_obj:
+                # Cas où le LLM renvoie un seul objet au lieu d'une liste
+                result = [json.loads(json_match_obj.group(0))]
+            else:
                 print(f"Réponse Ollama invalide (pas de JSON): {content}")
                 raise ValueError("Pas de JSON trouvé")
             
-            result = json.loads(json_match.group(0))
+            # S'assurer que c'est bien une liste
+            if isinstance(result, dict):
+                result = [result]
             
             # Normalisation finale
             for item in result:

@@ -36,7 +36,7 @@ function App() {
                 </div>
                 <div className="text-right hidden md:block">
                     <p className="text-sm text-gray-400">Version Bêta 0.2</p>
-                    <p className="text-xs text-gray-300">Propulsé par Ollama Mistral-Nemo</p>
+                    <p className="text-xs text-gray-300">Propulsé par Ollama Phi-3</p>
                 </div>
             </header>
 
