@@ -23,4 +23,6 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    environment:
+      - VITE_API_URL=http://168.231.77.11:8000/api/v1
     restart: unless-stopped
