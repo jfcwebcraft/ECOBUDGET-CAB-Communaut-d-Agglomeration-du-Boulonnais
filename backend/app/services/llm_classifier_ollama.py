@@ -31,7 +31,7 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
     async with httpx.AsyncClient(timeout=180.0) as client:
         try:
             resp = await client.post(
-                "http://ollama:11435/api/chat",  # port modifié
+                "http://ollama:11434/api/chat",  # Port interne Docker (toujours 11434)
                 json={
                     "model": "mistral-nemo",
                     "messages": [
