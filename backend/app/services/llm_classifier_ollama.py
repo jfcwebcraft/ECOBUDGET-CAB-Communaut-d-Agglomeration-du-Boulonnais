@@ -61,18 +61,22 @@ Réponds UNIQUEMENT JSON :
 ]
 """
 
-async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
-    if not lines:
-        return []
+import time
 
+async def classify_lines_with_ollama(lines: List[Dict]) -> Dict:
+    if not lines:
+        return {"results": [], "metadata": {}}
+
+    start_time = time.time()
     user_message = "Analyse ces lignes de devis :\n\n"
     for i, line in enumerate(lines, 1):
         user_message += f"{i}. {line['designation']} | {line['montant_ht']} € HT\n"
 
     async with httpx.AsyncClient(timeout=180.0) as client:
         try:
+            print(f"--- ENVOI OLLAMA ({len(lines)} lignes) ---")
             resp = await client.post(
-                "http://ollama:11434/api/chat",  # Port interne Docker (toujours 11434)
+                "http://ollama:11434/api/chat",
                 json={
                     "model": "mistral",
                     "messages": [
@@ -83,7 +87,7 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
                     "format": "json",
                     "options": {
                         "temperature": 0.1,
-                        "num_ctx": 2048  # 2048 suffisant pour Mistral, évite OOM
+                        "num_ctx": 2048
                     }
                 }
             )
@@ -92,6 +96,11 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
             
             resp.raise_for_status()
             content = resp.json()["message"]["content"]
+            duration = round(time.time() - start_time, 2)
+            
+            print(f"--- RÉPONSE OLLAMA BRUTE ({duration}s) ---")
+            print(content)
+            print("------------------------------------------")
 
             # Nettoyage et extraction flexible du JSON
             json_match_list = re.search(r'\[.*\]', content, re.DOTALL)
@@ -122,20 +131,35 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
                 item.setdefault("confiance", 0.8)
                 item.setdefault("explication", "Non classé automatiquement")
             
-            return result
+            return {
+                "results": result,
+                "metadata": {
+                    "model": "mistral",
+                    "duration": duration,
+                    "lines_input": len(lines),
+                    "lines_output": len(result)
+                }
+            }
 
         except Exception as e:
             print(f"EXCEPTION CRITIQUE OLLAMA : {str(e)}")
             traceback.print_exc()
-            return [
-                {
-                    "ligne": l["designation"],
-                    "montant_ht": l["montant_ht"],
-                    "budget_vert": False,
-                    "code_categorie": None,
-                    "axe": None,
-                    "confiance": 0.1,
-                    "explication": "Erreur IA – à vérifier manuellement"
+            return {
+                "results": [
+                    {
+                        "ligne": l["designation"],
+                        "montant_ht": l["montant_ht"],
+                        "budget_vert": False,
+                        "code_categorie": None,
+                        "axe": None,
+                        "confiance": 0.1,
+                        "explication": "Erreur IA – à vérifier manuellement"
+                    }
+                    for l in lines
+                ],
+                "metadata": {
+                    "model": "mistral",
+                    "error": str(e),
+                    "duration": round(time.time() - start_time, 2)
                 }
-                for l in lines
-            ]
+            }
