@@ -38,6 +38,8 @@ interface AnalysisResultProps {
 }
 
 const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
+    // État local pour afficher/masquer la référence des agrégats
+    const [showReference, setShowReference] = useState<boolean>(false);
     // État local pour gérer les modifications d'agrégats
     const [editedLines, setEditedLines] = useState<AnalysisLine[]>(result.lignes);
     const [modifiedIndices, setModifiedIndices] = useState<Set<number>>(new Set());
@@ -104,6 +106,36 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
                 </div>
             </div>
 
+            {/* Section Référence des Agrégats */}
+            {agregatsArray.length > 0 && (
+                <details className="bg-blue-50 rounded-xl border border-blue-200 mb-6 overflow-hidden">
+                    <summary className="cursor-pointer p-4 font-semibold text-blue-900 hover:bg-blue-100 transition-colors flex items-center justify-between">
+                        <span>📋 Référence des Agrégats Budgétaires ({agregatsArray.length} codes disponibles)</span>
+                        <span className="text-sm text-blue-600">Cliquer pour afficher/masquer</span>
+                    </summary>
+                    <div className="p-4 bg-white border-t border-blue-200">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            {agregatsArray.map((ag) => (
+                                <div
+                                    key={ag.code}
+                                    className="flex items-center gap-2 p-2 rounded hover:bg-blue-50 transition-colors"
+                                >
+                                    <span className="font-mono font-bold text-blue-700 min-w-[60px]">{ag.code}</span>
+                                    <span className="text-gray-600">—</span>
+                                    <span className="text-gray-800">{ag.libelle}</span>
+                                    <span className={`ml-auto text-xs px-2 py-0.5 rounded ${ag.type === 'Investissement'
+                                            ? 'bg-green-100 text-green-700'
+                                            : 'bg-orange-100 text-orange-700'
+                                        }`}>
+                                        {ag.type}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </details>
+            )}
+
             {/* Tableau détaillé */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div className="overflow-x-auto">
@@ -138,8 +170,8 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
                                                 value={line.code_categorie || ''}
                                                 onChange={(e) => handleAgregatChange(index, e.target.value)}
                                                 className={`w-full px-2 py-1 text-xs font-medium rounded border ${modifiedIndices.has(index)
-                                                        ? 'bg-yellow-50 border-yellow-400 text-yellow-800'
-                                                        : 'bg-blue-50 border-blue-100 text-blue-700'
+                                                    ? 'bg-yellow-50 border-yellow-400 text-yellow-800'
+                                                    : 'bg-blue-50 border-blue-100 text-blue-700'
                                                     } focus:outline-none focus:ring-2 focus:ring-blue-500`}
                                                 title={line.code_categorie && result.agregats_reference?.[line.code_categorie]
                                                     ? `${line.code_categorie} - ${result.agregats_reference[line.code_categorie].libelle}`
