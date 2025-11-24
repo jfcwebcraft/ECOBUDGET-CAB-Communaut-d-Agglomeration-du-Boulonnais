@@ -74,7 +74,7 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
             resp = await client.post(
                 "http://ollama:11434/api/chat",  # Port interne Docker (toujours 11434)
                 json={
-                    "model": "phi3",
+                    "model": "mistral",
                     "messages": [
                         {"role": "system", "content": SYSTEM_PROMPT},
                         {"role": "user", "content": user_message}
@@ -83,7 +83,7 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> List[Dict]:
                     "format": "json",
                     "options": {
                         "temperature": 0.1,
-                        "num_ctx": 4096  # Augmenté pour la taxonomie complète (2048 → 4096)
+                        "num_ctx": 2048  # 2048 suffisant pour Mistral, évite OOM
                     }
                 }
             )
