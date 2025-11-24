@@ -43,8 +43,8 @@ async def analyze_invoice(file: UploadFile = File(...)):
     return {
         "filename": file.filename,
         "total_ht": round(total_ht, 2),
-        "total_vert": round(total_vert, 2),
-        "part_verte": round(part_verte, 1),
-        "lines": classified_lines,
+        "total_budget_vert": round(total_vert, 2),
+        "pourcentage_budget_vert": round(part_verte, 1),
+        "lignes": classified_lines,
         "metadata": metadata
     }
