@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from app.services.pdf_extractor import extract_data_from_pdf
+from app.services.pdf_extractor import extract_lines_from_pdf
 from app.services.llm_classifier_ollama import classify_lines_with_ollama
 import shutil
 import os
@@ -15,7 +15,7 @@ async def analyze_invoice(file: UploadFile = File(...)):
 
     # Extraction des données
     try:
-        lines = extract_data_from_pdf(temp_file)
+        lines = extract_lines_from_pdf(temp_file)
     except Exception as e:
         os.remove(temp_file)
         raise HTTPException(status_code=400, detail=f"Erreur extraction PDF: {str(e)}")
