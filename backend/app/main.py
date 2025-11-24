@@ -1,25 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.core.config import settings
-from app.routers import upload
+from app.routers import upload, analyze
 
-app = FastAPI(title=settings.PROJECT_NAME)
+app = FastAPI(title="ECOBUDGET-CAB API")
 
 # Configuration CORS
-origins = ["*"]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-from app.routers import upload, analyze
-
-app.include_router(upload.router, prefix="/api/v1", tags=["upload"])
-app.include_router(analyze.router, prefix="/api/v1", tags=["analyze"])
+# Routes
+app.include_router(analyze.router, tags=["analyze"])
 
 @app.get("/")
 def read_root():
