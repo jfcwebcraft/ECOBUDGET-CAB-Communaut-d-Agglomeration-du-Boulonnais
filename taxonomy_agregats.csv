@@ -1,0 +1,574 @@
+LIBELLE_NOMENCLATURE,NUMERO_COMPTE,AGR_DEBIT,LIBELLE_AGREGAT_DEBIT
+M57_D,2045,A105,Subventions d'investissement versées
+M57_D,2046,A105,Subventions d'investissement versées
+M57_D,20421,A105,Subventions d'investissement versées
+M57_D,20422,A105,Subventions d'investissement versées
+M57_D,20423,A105,Subventions d'investissement versées
+M57_D,20431,A105,Subventions d'investissement versées
+M57_D,20432,A105,Subventions d'investissement versées
+M57_D,20433,A105,Subventions d'investissement versées
+M57_D,204111,A105,Subventions d'investissement versées
+M57_D,204112,A105,Subventions d'investissement versées
+M57_D,204113,A105,Subventions d'investissement versées
+M57_D,204114,A105,Subventions d'investissement versées
+M57_D,204115,A105,Subventions d'investissement versées
+M57_D,204121,A105,Subventions d'investissement versées
+M57_D,204122,A105,Subventions d'investissement versées
+M57_D,204123,A105,Subventions d'investissement versées
+M57_D,204131,A105,Subventions d'investissement versées
+M57_D,204132,A105,Subventions d'investissement versées
+M57_D,204133,A105,Subventions d'investissement versées
+M57_D,204181,A105,Subventions d'investissement versées
+M57_D,204182,A105,Subventions d'investissement versées
+M57_D,204183,A105,Subventions d'investissement versées
+M57_D,204411,A105,Subventions d'investissement versées
+M57_D,204412,A105,Subventions d'investissement versées
+M57_D,204413,A105,Subventions d'investissement versées
+M57_D,204421,A105,Subventions d'investissement versées
+M57_D,204422,A105,Subventions d'investissement versées
+M57_D,204423,A105,Subventions d'investissement versées
+M57_D,2041411,A105,Subventions d'investissement versées
+M57_D,2041412,A105,Subventions d'investissement versées
+M57_D,2041413,A105,Subventions d'investissement versées
+M57_D,2041481,A105,Subventions d'investissement versées
+M57_D,2041482,A105,Subventions d'investissement versées
+M57_D,2041483,A105,Subventions d'investissement versées
+M57_D,2041511,A105,Subventions d'investissement versées
+M57_D,2041512,A105,Subventions d'investissement versées
+M57_D,2041513,A105,Subventions d'investissement versées
+M57_D,2041581,A105,Subventions d'investissement versées
+M57_D,2041582,A105,Subventions d'investissement versées
+M57_D,2041583,A105,Subventions d'investissement versées
+M57_D,2041711,A105,Subventions d'investissement versées
+M57_D,2041712,A105,Subventions d'investissement versées
+M57_D,2041713,A105,Subventions d'investissement versées
+M57_D,2041721,A105,Subventions d'investissement versées
+M57_D,2041722,A105,Subventions d'investissement versées
+M57_D,2041723,A105,Subventions d'investissement versées
+M57_D,2041781,A105,Subventions d'investissement versées
+M57_D,2041782,A105,Subventions d'investissement versées
+M57_D,2041783,A105,Subventions d'investissement versées
+M57_D,20415311,A105,Subventions d'investissement versées
+M57_D,20415312,A105,Subventions d'investissement versées
+M57_D,20415313,A105,Subventions d'investissement versées
+M57_D,20415321,A105,Subventions d'investissement versées
+M57_D,20415322,A105,Subventions d'investissement versées
+M57_D,20415323,A105,Subventions d'investissement versées
+M57_D,20415331,A105,Subventions d'investissement versées
+M57_D,20415332,A105,Subventions d'investissement versées
+M57_D,20415333,A105,Subventions d'investissement versées
+M57_D,20415341,A105,Subventions d'investissement versées
+M57_D,20415342,A105,Subventions d'investissement versées
+M57_D,20415343,A105,Subventions d'investissement versées
+M57_D,202,A110,Autres immobilisations incorporelles
+M57_D,2031,A110,Autres immobilisations incorporelles
+M57_D,2032,A110,Autres immobilisations incorporelles
+M57_D,2033,A110,Autres immobilisations incorporelles
+M57_D,2051,A110,Autres immobilisations incorporelles
+M57_D,2053,A110,Autres immobilisations incorporelles
+M57_D,2087,A110,Autres immobilisations incorporelles
+M57_D,2088,A110,Autres immobilisations incorporelles
+M57_D,237,A115,Immobilisations incorporelles en cours
+M57_D,2324,A115,Immobilisations incorporelles en cours
+M57_D,2328,A115,Immobilisations incorporelles en cours
+M57_D,2111,A120,Terrains
+M57_D,2112,A120,Terrains
+M57_D,2113,A120,Terrains
+M57_D,2114,A120,Terrains
+M57_D,2115,A120,Terrains
+M57_D,2116,A120,Terrains
+M57_D,2117,A120,Terrains
+M57_D,2118,A120,Terrains
+M57_D,2121,A120,Terrains
+M57_D,2128,A120,Terrains
+M57_D,2211,A120,Terrains
+M57_D,2212,A120,Terrains
+M57_D,2213,A120,Terrains
+M57_D,2214,A120,Terrains
+M57_D,2215,A120,Terrains
+M57_D,2217,A120,Terrains
+M57_D,2218,A120,Terrains
+M57_D,2221,A120,Terrains
+M57_D,2228,A120,Terrains
+M57_D,21711,A120,Terrains
+M57_D,21712,A120,Terrains
+M57_D,21713,A120,Terrains
+M57_D,21714,A120,Terrains
+M57_D,21715,A120,Terrains
+M57_D,21717,A120,Terrains
+M57_D,21718,A120,Terrains
+M57_D,21721,A120,Terrains
+M57_D,21728,A120,Terrains
+M57_D,2138,A125,Constructions
+M57_D,2141,A125,Constructions
+M57_D,2142,A125,Constructions
+M57_D,2143,A125,Constructions
+M57_D,2145,A125,Constructions
+M57_D,2148,A125,Constructions
+M57_D,2235,A125,Constructions
+M57_D,2238,A125,Constructions
+M57_D,2241,A125,Constructions
+M57_D,2242,A125,Constructions
+M57_D,2245,A125,Constructions
+M57_D,2248,A125,Constructions
+M57_D,21311,A125,Constructions
+M57_D,21312,A125,Constructions
+M57_D,21313,A125,Constructions
+M57_D,21314,A125,Constructions
+M57_D,21315,A125,Constructions
+M57_D,21316,A125,Constructions
+M57_D,21318,A125,Constructions
+M57_D,21321,A125,Constructions
+M57_D,21328,A125,Constructions
+M57_D,21351,A125,Constructions
+M57_D,21352,A125,Constructions
+M57_D,21735,A125,Constructions
+M57_D,21738,A125,Constructions
+M57_D,21741,A125,Constructions
+M57_D,21742,A125,Constructions
+M57_D,21745,A125,Constructions
+M57_D,21748,A125,Constructions
+M57_D,22311,A125,Constructions
+M57_D,22312,A125,Constructions
+M57_D,22313,A125,Constructions
+M57_D,22314,A125,Constructions
+M57_D,22315,A125,Constructions
+M57_D,22318,A125,Constructions
+M57_D,22321,A125,Constructions
+M57_D,22328,A125,Constructions
+M57_D,217311,A125,Constructions
+M57_D,217312,A125,Constructions
+M57_D,217313,A125,Constructions
+M57_D,217314,A125,Constructions
+M57_D,217315,A125,Constructions
+M57_D,217318,A125,Constructions
+M57_D,217321,A125,Constructions
+M57_D,217328,A125,Constructions
+M57_D,2151,A130,Réseaux et installations de voirie
+M57_D,2152,A130,Réseaux et installations de voirie
+M57_D,2154,A130,Réseaux et installations de voirie
+M57_D,2251,A130,Réseaux et installations de voirie
+M57_D,2252,A130,Réseaux et installations de voirie
+M57_D,2254,A130,Réseaux et installations de voirie
+M57_D,21751,A130,Réseaux et installations de voirie
+M57_D,21752,A130,Réseaux et installations de voirie
+M57_D,21754,A130,Réseaux et installations de voirie
+M57_D,21531,A135,Réseaux divers
+M57_D,21532,A135,Réseaux divers
+M57_D,21533,A135,Réseaux divers
+M57_D,21534,A135,Réseaux divers
+M57_D,21535,A135,Réseaux divers
+M57_D,21536,A135,Réseaux divers
+M57_D,21538,A135,Réseaux divers
+M57_D,22531,A135,Réseaux divers
+M57_D,22532,A135,Réseaux divers
+M57_D,22533,A135,Réseaux divers
+M57_D,22534,A135,Réseaux divers
+M57_D,22535,A135,Réseaux divers
+M57_D,22536,A135,Réseaux divers
+M57_D,22538,A135,Réseaux divers
+M57_D,217531,A135,Réseaux divers
+M57_D,217532,A135,Réseaux divers
+M57_D,217533,A135,Réseaux divers
+M57_D,217534,A135,Réseaux divers
+M57_D,217535,A135,Réseaux divers
+M57_D,217536,A135,Réseaux divers
+M57_D,217538,A135,Réseaux divers
+M57_D,2158,A140,"Installations techniques, agencements et matériel"
+M57_D,2256,A140,"Installations techniques, agencements et matériel"
+M57_D,2258,A140,"Installations techniques, agencements et matériel"
+M57_D,21561,A140,"Installations techniques, agencements et matériel"
+M57_D,21568,A140,"Installations techniques, agencements et matériel"
+M57_D,21571,A140,"Installations techniques, agencements et matériel"
+M57_D,21572,A140,"Installations techniques, agencements et matériel"
+M57_D,21578,A140,"Installations techniques, agencements et matériel"
+M57_D,21758,A140,"Installations techniques, agencements et matériel"
+M57_D,22571,A140,"Installations techniques, agencements et matériel"
+M57_D,22572,A140,"Installations techniques, agencements et matériel"
+M57_D,22578,A140,"Installations techniques, agencements et matériel"
+M57_D,215731,A140,"Installations techniques, agencements et matériel"
+M57_D,215738,A140,"Installations techniques, agencements et matériel"
+M57_D,215741,A140,"Installations techniques, agencements et matériel"
+M57_D,215742,A140,"Installations techniques, agencements et matériel"
+M57_D,217561,A140,"Installations techniques, agencements et matériel"
+M57_D,217568,A140,"Installations techniques, agencements et matériel"
+M57_D,217571,A140,"Installations techniques, agencements et matériel"
+M57_D,217572,A140,"Installations techniques, agencements et matériel"
+M57_D,217578,A140,"Installations techniques, agencements et matériel"
+M57_D,225731,A140,"Installations techniques, agencements et matériel"
+M57_D,225738,A140,"Installations techniques, agencements et matériel"
+M57_D,2175731,A140,"Installations techniques, agencements et matériel"
+M57_D,2175738,A140,"Installations techniques, agencements et matériel"
+M57_D,2411,A145,Immobilisations mises en concessions ou affermées
+M57_D,2418,A145,Immobilisations mises en concessions ou affermées
+M57_D,2181,A150,Autres
+M57_D,2185,A150,Autres
+M57_D,2186,A150,Autres
+M57_D,2188,A150,Autres
+M57_D,2281,A150,Autres
+M57_D,2285,A150,Autres
+M57_D,2286,A150,Autres
+M57_D,2288,A150,Autres
+M57_D,21611,A150,Autres
+M57_D,21612,A150,Autres
+M57_D,21621,A150,Autres
+M57_D,21622,A150,Autres
+M57_D,21785,A150,Autres
+M57_D,21786,A150,Autres
+M57_D,21788,A150,Autres
+M57_D,21821,A150,Autres
+M57_D,21828,A150,Autres
+M57_D,21831,A150,Autres
+M57_D,21838,A150,Autres
+M57_D,21841,A150,Autres
+M57_D,21848,A150,Autres
+M57_D,22611,A150,Autres
+M57_D,22612,A150,Autres
+M57_D,22621,A150,Autres
+M57_D,22622,A150,Autres
+M57_D,22821,A150,Autres
+M57_D,22828,A150,Autres
+M57_D,22831,A150,Autres
+M57_D,22838,A150,Autres
+M57_D,22841,A150,Autres
+M57_D,22848,A150,Autres
+M57_D,217611,A150,Autres
+M57_D,217612,A150,Autres
+M57_D,217621,A150,Autres
+M57_D,217622,A150,Autres
+M57_D,217821,A150,Autres
+M57_D,217828,A150,Autres
+M57_D,217831,A150,Autres
+M57_D,217838,A150,Autres
+M57_D,217841,A150,Autres
+M57_D,217848,A150,Autres
+M57_D,235,A155,Immobilisations corporelles en cours
+M57_D,236,A155,Immobilisations corporelles en cours
+M57_D,238,A155,Immobilisations corporelles en cours
+M57_D,2312,A155,Immobilisations corporelles en cours
+M57_D,2313,A155,Immobilisations corporelles en cours
+M57_D,2314,A155,Immobilisations corporelles en cours
+M57_D,2315,A155,Immobilisations corporelles en cours
+M57_D,2316,A155,Immobilisations corporelles en cours
+M57_D,2317,A155,Immobilisations corporelles en cours
+M57_D,2318,A155,Immobilisations corporelles en cours
+M57_D,261,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,266,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,271,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,272,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,275,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2731,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2732,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2741,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2743,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2744,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2745,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2748,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2761,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2762,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2764,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,2766,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,27631,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,27632,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,27633,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,27636,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,27638,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,27682,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,27684,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,27688,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,276341,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,276348,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,276351,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,276358,A165,IMMOBILISATIONS FINANCIÈRES
+M57_D,4581,A225,Créances correspondant à des opérations pour compte de tiers
+M57_D,7491,R105,Dotations de l'état
+M57_D,74119,R105,Dotations de l'état
+M57_D,7498,R115,"Compensations, autres attributions et autres participations"
+M57_D,74869,R115,"Compensations, autres attributions et autres participations"
+M57_D,748719,R115,"Compensations, autres attributions et autres participations"
+M57_D,748729,R115,"Compensations, autres attributions et autres participations"
+M57_D,709,R130,Ventes de biens ou prestations de services
+M57_D,70619,R130,Ventes de biens ou prestations de services
+M57_D,701249,R130,Ventes de biens ou prestations de services
+M57_D,703892,R130,Ventes de biens ou prestations de services
+M57_D,703894,R130,Ventes de biens ou prestations de services
+M57_D,7068129,R130,Ventes de biens ou prestations de services
+M57_D,605,R205,Achats et charges externes
+M57_D,608,R205,Achats et charges externes
+M57_D,611,R205,Achats et charges externes
+M57_D,614,R205,Achats et charges externes
+M57_D,617,R205,Achats et charges externes
+M57_D,627,R205,Achats et charges externes
+M57_D,6011,R205,Achats et charges externes
+M57_D,6015,R205,Achats et charges externes
+M57_D,6021,R205,Achats et charges externes
+M57_D,6023,R205,Achats et charges externes
+M57_D,6027,R205,Achats et charges externes
+M57_D,6028,R205,Achats et charges externes
+M57_D,6032,R205,Achats et charges externes
+M57_D,6037,R205,Achats et charges externes
+M57_D,6041,R205,Achats et charges externes
+M57_D,6042,R205,Achats et charges externes
+M57_D,6045,R205,Achats et charges externes
+M57_D,6064,R205,Achats et charges externes
+M57_D,6065,R205,Achats et charges externes
+M57_D,6067,R205,Achats et charges externes
+M57_D,6068,R205,Achats et charges externes
+M57_D,6071,R205,Achats et charges externes
+M57_D,6078,R205,Achats et charges externes
+M57_D,6125,R205,Achats et charges externes
+M57_D,6132,R205,Achats et charges externes
+M57_D,6156,R205,Achats et charges externes
+M57_D,6161,R205,Achats et charges externes
+M57_D,6162,R205,Achats et charges externes
+M57_D,6168,R205,Achats et charges externes
+M57_D,6182,R205,Achats et charges externes
+M57_D,6183,R205,Achats et charges externes
+M57_D,6184,R205,Achats et charges externes
+M57_D,6185,R205,Achats et charges externes
+M57_D,6188,R205,Achats et charges externes
+M57_D,6211,R205,Achats et charges externes
+M57_D,6213,R205,Achats et charges externes
+M57_D,6214,R205,Achats et charges externes
+M57_D,6215,R205,Achats et charges externes
+M57_D,6216,R205,Achats et charges externes
+M57_D,6218,R205,Achats et charges externes
+M57_D,6225,R205,Achats et charges externes
+M57_D,6227,R205,Achats et charges externes
+M57_D,6228,R205,Achats et charges externes
+M57_D,6231,R205,Achats et charges externes
+M57_D,6232,R205,Achats et charges externes
+M57_D,6233,R205,Achats et charges externes
+M57_D,6234,R205,Achats et charges externes
+M57_D,6236,R205,Achats et charges externes
+M57_D,6237,R205,Achats et charges externes
+M57_D,6238,R205,Achats et charges externes
+M57_D,6241,R205,Achats et charges externes
+M57_D,6245,R205,Achats et charges externes
+M57_D,6247,R205,Achats et charges externes
+M57_D,6248,R205,Achats et charges externes
+M57_D,6251,R205,Achats et charges externes
+M57_D,6255,R205,Achats et charges externes
+M57_D,6261,R205,Achats et charges externes
+M57_D,6262,R205,Achats et charges externes
+M57_D,6281,R205,Achats et charges externes
+M57_D,6282,R205,Achats et charges externes
+M57_D,6283,R205,Achats et charges externes
+M57_D,6284,R205,Achats et charges externes
+M57_D,6288,R205,Achats et charges externes
+M57_D,60221,R205,Achats et charges externes
+M57_D,60222,R205,Achats et charges externes
+M57_D,60224,R205,Achats et charges externes
+M57_D,60225,R205,Achats et charges externes
+M57_D,60226,R205,Achats et charges externes
+M57_D,60227,R205,Achats et charges externes
+M57_D,60228,R205,Achats et charges externes
+M57_D,60261,R205,Achats et charges externes
+M57_D,60262,R205,Achats et charges externes
+M57_D,60268,R205,Achats et charges externes
+M57_D,60311,R205,Achats et charges externes
+M57_D,60315,R205,Achats et charges externes
+M57_D,60611,R205,Achats et charges externes
+M57_D,60612,R205,Achats et charges externes
+M57_D,60613,R205,Achats et charges externes
+M57_D,60618,R205,Achats et charges externes
+M57_D,60621,R205,Achats et charges externes
+M57_D,60622,R205,Achats et charges externes
+M57_D,60623,R205,Achats et charges externes
+M57_D,60624,R205,Achats et charges externes
+M57_D,60628,R205,Achats et charges externes
+M57_D,60631,R205,Achats et charges externes
+M57_D,60632,R205,Achats et charges externes
+M57_D,60633,R205,Achats et charges externes
+M57_D,60636,R205,Achats et charges externes
+M57_D,60661,R205,Achats et charges externes
+M57_D,60662,R205,Achats et charges externes
+M57_D,60668,R205,Achats et charges externes
+M57_D,61221,R205,Achats et charges externes
+M57_D,61228,R205,Achats et charges externes
+M57_D,61351,R205,Achats et charges externes
+M57_D,61358,R205,Achats et charges externes
+M57_D,61521,R205,Achats et charges externes
+M57_D,61524,R205,Achats et charges externes
+M57_D,61551,R205,Achats et charges externes
+M57_D,61558,R205,Achats et charges externes
+M57_D,62121,R205,Achats et charges externes
+M57_D,62122,R205,Achats et charges externes
+M57_D,62261,R205,Achats et charges externes
+M57_D,62268,R205,Achats et charges externes
+M57_D,62871,R205,Achats et charges externes
+M57_D,62873,R205,Achats et charges externes
+M57_D,62874,R205,Achats et charges externes
+M57_D,62875,R205,Achats et charges externes
+M57_D,62876,R205,Achats et charges externes
+M57_D,62878,R205,Achats et charges externes
+M57_D,602231,R205,Achats et charges externes
+M57_D,602238,R205,Achats et charges externes
+M57_D,615221,R205,Achats et charges externes
+M57_D,615228,R205,Achats et charges externes
+M57_D,615231,R205,Achats et charges externes
+M57_D,615232,R205,Achats et charges externes
+M57_D,628721,R205,Achats et charges externes
+M57_D,628722,R205,Achats et charges externes
+M57_D,642,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,646,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,6414,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,6415,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,6417,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,6431,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,6441,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,6442,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,6484,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,6488,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64111,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64112,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64113,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64116,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64118,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64121,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64123,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64126,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64128,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64131,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64132,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64136,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64138,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64161,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64162,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,64168,R210,"Dont salaires, traitements et rémunérations diverses"
+M57_D,6451,R215,Dont charges sociales
+M57_D,6453,R215,Dont charges sociales
+M57_D,6454,R215,Dont charges sociales
+M57_D,6455,R215,Dont charges sociales
+M57_D,6456,R215,Dont charges sociales
+M57_D,6457,R215,Dont charges sociales
+M57_D,6458,R215,Dont charges sociales
+M57_D,6471,R215,Dont charges sociales
+M57_D,6472,R215,Dont charges sociales
+M57_D,6474,R215,Dont charges sociales
+M57_D,6475,R215,Dont charges sociales
+M57_D,6478,R215,Dont charges sociales
+M57_D,64731,R215,Dont charges sociales
+M57_D,64732,R215,Dont charges sociales
+M57_D,673,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,6541,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,6542,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,6583,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,6584,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65811,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65818,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65821,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65822,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65823,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65824,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65825,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65861,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65862,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65881,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65882,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65883,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65886,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,65888,R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+M57_D,6514,R305,Dont ménages
+M57_D,6515,R305,Dont ménages
+M57_D,6522,R305,Dont ménages
+M57_D,6523,R305,Dont ménages
+M57_D,6525,R305,Dont ménages
+M57_D,6526,R305,Dont ménages
+M57_D,6565,R305,Dont ménages
+M57_D,6566,R305,Dont ménages
+M57_D,6575,R305,Dont ménages
+M57_D,65111,R305,Dont ménages
+M57_D,65113,R305,Dont ménages
+M57_D,65121,R305,Dont ménages
+M57_D,65122,R305,Dont ménages
+M57_D,65123,R305,Dont ménages
+M57_D,65124,R305,Dont ménages
+M57_D,65131,R305,Dont ménages
+M57_D,65132,R305,Dont ménages
+M57_D,65133,R305,Dont ménages
+M57_D,65134,R305,Dont ménages
+M57_D,65138,R305,Dont ménages
+M57_D,65171,R305,Dont ménages
+M57_D,65172,R305,Dont ménages
+M57_D,65173,R305,Dont ménages
+M57_D,65181,R305,Dont ménages
+M57_D,65188,R305,Dont ménages
+M57_D,65211,R305,Dont ménages
+M57_D,65212,R305,Dont ménages
+M57_D,65242,R305,Dont ménages
+M57_D,65243,R305,Dont ménages
+M57_D,65671,R305,Dont ménages
+M57_D,65672,R305,Dont ménages
+M57_D,65741,R305,Dont ménages
+M57_D,651122,R305,Dont ménages
+M57_D,651123,R305,Dont ménages
+M57_D,651128,R305,Dont ménages
+M57_D,651142,R305,Dont ménages
+M57_D,651143,R305,Dont ménages
+M57_D,651144,R305,Dont ménages
+M57_D,651148,R305,Dont ménages
+M57_D,652411,R305,Dont ménages
+M57_D,652412,R305,Dont ménages
+M57_D,652413,R305,Dont ménages
+M57_D,652414,R305,Dont ménages
+M57_D,652415,R305,Dont ménages
+M57_D,652416,R305,Dont ménages
+M57_D,652418,R305,Dont ménages
+M57_D,6511211,R305,Dont ménages
+M57_D,6511212,R305,Dont ménages
+M57_D,6511213,R305,Dont ménages
+M57_D,6511411,R305,Dont ménages
+M57_D,6511412,R305,Dont ménages
+M57_D,65521,R310,Dont personnes morales de droit privé
+M57_D,65641,R310,Dont personnes morales de droit privé
+M57_D,65737,R310,Dont personnes morales de droit privé
+M57_D,65742,R310,Dont personnes morales de droit privé
+M57_D,65743,R310,Dont personnes morales de droit privé
+M57_D,65748,R310,Dont personnes morales de droit privé
+M57_D,65522,R315,Dont collectivités territoriales
+M57_D,65541,R315,Dont collectivités territoriales
+M57_D,65542,R315,Dont collectivités territoriales
+M57_D,65732,R315,Dont collectivités territoriales
+M57_D,65733,R315,Dont collectivités territoriales
+M57_D,657341,R315,Dont collectivités territoriales
+M57_D,657348,R315,Dont collectivités territoriales
+M57_D,6553,R320,Dont autres organismes publics
+M57_D,6555,R320,Dont autres organismes publics
+M57_D,6561,R320,Dont autres organismes publics
+M57_D,6562,R320,Dont autres organismes publics
+M57_D,65561,R320,Dont autres organismes publics
+M57_D,65642,R320,Dont autres organismes publics
+M57_D,65731,R320,Dont autres organismes publics
+M57_D,655238,R320,Dont autres organismes publics
+M57_D,657351,R320,Dont autres organismes publics
+M57_D,657358,R320,Dont autres organismes publics
+M57_D,657361,R320,Dont autres organismes publics
+M57_D,657363,R320,Dont autres organismes publics
+M57_D,657364,R320,Dont autres organismes publics
+M57_D,657365,R320,Dont autres organismes publics
+M57_D,657381,R320,Dont autres organismes publics
+M57_D,657382,R320,Dont autres organismes publics
+M57_D,65736211,R320,Dont autres organismes publics
+M57_D,65736212,R320,Dont autres organismes publics
+M57_D,65736221,R320,Dont autres organismes publics
+M57_D,65736222,R320,Dont autres organismes publics
+M57_D,655111,R325,Dont établissements d'enseignement
+M57_D,655112,R325,Dont établissements d'enseignement
+M57_D,655121,R325,Dont établissements d'enseignement
+M57_D,655122,R325,Dont établissements d'enseignement
+M57_D,655231,R325,Dont établissements d'enseignement
+M57_D,6558,R330,Autres charges
+M57_D,6568,R330,Autres charges
+M57_D,6577,R330,Autres charges
+M57_D,65568,R330,Autres charges
+M57_D,65571,R330,Autres charges
+M57_D,65572,R330,Autres charges
+M57_D,65573,R330,Autres charges
+M57_D,65574,R330,Autres charges
+M57_D,65648,R330,Autres charges
+M57_D,665,R515,Autres charges financières
+M57_D,666,R515,Autres charges financières
+M57_D,6681,R515,Autres charges financières
+M57_D,6682,R515,Autres charges financières
+M57_D,6688,R515,Autres charges financières

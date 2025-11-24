@@ -1,0 +1,28 @@
+AGR_DEBIT,LIBELLE_AGREGAT_DEBIT
+A105,Subventions d'investissement versées
+A110,Autres immobilisations incorporelles
+A115,Immobilisations incorporelles en cours
+A120,Terrains
+A125,Constructions
+A130,Réseaux et installations de voirie
+A135,Réseaux divers
+A140,"Installations techniques, agencements et matériel"
+A145,Immobilisations mises en concessions ou affermées
+A150,Autres
+A155,Immobilisations corporelles en cours
+A165,IMMOBILISATIONS FINANCIÈRES
+A225,Créances correspondant à des opérations pour compte de tiers
+R105,Dotations de l'état
+R115,"Compensations, autres attributions et autres participations"
+R130,Ventes de biens ou prestations de services
+R205,Achats et charges externes
+R210,"Dont salaires, traitements et rémunérations diverses"
+R215,Dont charges sociales
+R225,Autres charges de fonctionnement (dont pertes sur créances irrécouvrables)
+R305,Dont ménages
+R310,Dont personnes morales de droit privé
+R315,Dont collectivités territoriales
+R320,Dont autres organismes publics
+R325,Dont établissements d'enseignement
+R330,Autres charges
+R515,Autres charges financières

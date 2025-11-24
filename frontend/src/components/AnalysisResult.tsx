@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface AnalysisLine {
     ligne: string;
@@ -8,6 +8,12 @@ interface AnalysisLine {
     axe: string | null;
     confiance: number;
     explication: string;
+}
+
+interface AgregatReference {
+    code: string;
+    libelle: string;
+    type: string;
 }
 
 interface AnalysisResultData {
@@ -23,6 +29,7 @@ interface AnalysisResultData {
         lines_output: number;
         error?: string;
     };
+    agregats_reference?: Record<string, AgregatReference>;
 }
 
 interface AnalysisResultProps {
@@ -31,6 +38,31 @@ interface AnalysisResultProps {
 }
 
 const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
+    // État local pour gérer les modifications d'agrégats
+    const [editedLines, setEditedLines] = useState<AnalysisLine[]>(result.lignes);
+    const [modifiedIndices, setModifiedIndices] = useState<Set<number>>(new Set());
+
+    const handleAgregatChange = (index: number, newAgregat: string) => {
+        const newLines = [...editedLines];
+        newLines[index] = {
+            ...newLines[index],
+            code_categorie: newAgregat || null
+        };
+        setEditedLines(newLines);
+
+        const newModified = new Set(modifiedIndices);
+        if (newAgregat !== result.lignes[index].code_categorie) {
+            newModified.add(index);
+        } else {
+            newModified.delete(index);
+        }
+        setModifiedIndices(newModified);
+    };
+
+    const agregatsArray = result.agregats_reference
+        ? Object.values(result.agregats_reference).sort((a, b) => a.code.localeCompare(b.code))
+        : [];
+
     return (
         <div className="w-full max-w-6xl mx-auto mt-8 animate-fade-in">
             {/* En-tête des résultats */}
@@ -86,8 +118,8 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
-                            {result.lignes.map((line, index) => (
-                                <tr key={index} className="hover:bg-gray-50 transition-colors">
+                            {editedLines.map((line, index) => (
+                                <tr key={index} className={`hover:bg-gray-50 transition-colors ${modifiedIndices.has(index) ? 'bg-yellow-50' : ''}`}>
                                     <td className="p-4 text-sm text-gray-800 font-medium">{line.ligne}</td>
                                     <td className="p-4 text-sm text-gray-600 text-right font-mono">
                                         {line.montant_ht.toLocaleString('fr-FR')} €
@@ -101,13 +133,32 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
                                         </span>
                                     </td>
                                     <td className="p-4 text-sm">
-                                        {line.code_categorie ? (
-                                            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
-                                                {line.code_categorie}
-                                            </span>
-                                        ) : (
-                                            <span className="text-gray-400">-</span>
-                                        )}
+                                        <div className="relative">
+                                            <select
+                                                value={line.code_categorie || ''}
+                                                onChange={(e) => handleAgregatChange(index, e.target.value)}
+                                                className={`w-full px-2 py-1 text-xs font-medium rounded border ${modifiedIndices.has(index)
+                                                        ? 'bg-yellow-50 border-yellow-400 text-yellow-800'
+                                                        : 'bg-blue-50 border-blue-100 text-blue-700'
+                                                    } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                                                title={line.code_categorie && result.agregats_reference?.[line.code_categorie]
+                                                    ? `${line.code_categorie} - ${result.agregats_reference[line.code_categorie].libelle}`
+                                                    : 'Sélectionner un agrégat'}
+                                            >
+                                                <option value="">Non classé</option>
+                                                {agregatsArray.map((ag) => (
+                                                    <option key={ag.code} value={ag.code}>
+                                                        {ag.code} - {ag.libelle}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {modifiedIndices.has(index) && (
+                                                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                                                </span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="p-4 text-sm text-gray-500 italic max-w-xs truncate" title={line.explication}>
                                         {line.explication}

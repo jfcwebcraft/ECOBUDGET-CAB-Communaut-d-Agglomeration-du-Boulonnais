@@ -1,0 +1,137 @@
+{
+    "A105": {
+        "code": "A105",
+        "libelle": "Subventions d'investissement versées",
+        "type": "Investissement"
+    },
+    "A110": {
+        "code": "A110",
+        "libelle": "Autres immobilisations incorporelles",
+        "type": "Investissement"
+    },
+    "A115": {
+        "code": "A115",
+        "libelle": "Immobilisations incorporelles en cours",
+        "type": "Investissement"
+    },
+    "A120": {
+        "code": "A120",
+        "libelle": "Terrains",
+        "type": "Investissement"
+    },
+    "A125": {
+        "code": "A125",
+        "libelle": "Constructions",
+        "type": "Investissement"
+    },
+    "A130": {
+        "code": "A130",
+        "libelle": "Réseaux et installations de voirie",
+        "type": "Investissement"
+    },
+    "A135": {
+        "code": "A135",
+        "libelle": "Réseaux divers",
+        "type": "Investissement"
+    },
+    "A140": {
+        "code": "A140",
+        "libelle": "Installations techniques, agencements et matériel",
+        "type": "Investissement"
+    },
+    "A145": {
+        "code": "A145",
+        "libelle": "Immobilisations mises en concessions ou affermées",
+        "type": "Investissement"
+    },
+    "A150": {
+        "code": "A150",
+        "libelle": "Autres",
+        "type": "Investissement"
+    },
+    "A155": {
+        "code": "A155",
+        "libelle": "Immobilisations corporelles en cours",
+        "type": "Investissement"
+    },
+    "A165": {
+        "code": "A165",
+        "libelle": "IMMOBILISATIONS FINANCIÈRES",
+        "type": "Investissement"
+    },
+    "A225": {
+        "code": "A225",
+        "libelle": "Créances correspondant à des opérations pour compte de tiers",
+        "type": "Investissement"
+    },
+    "R105": {
+        "code": "R105",
+        "libelle": "Dotations de l'état",
+        "type": "Fonctionnement"
+    },
+    "R115": {
+        "code": "R115",
+        "libelle": "Compensations, autres attributions et autres participations",
+        "type": "Fonctionnement"
+    },
+    "R130": {
+        "code": "R130",
+        "libelle": "Ventes de biens ou prestations de services",
+        "type": "Fonctionnement"
+    },
+    "R205": {
+        "code": "R205",
+        "libelle": "Achats et charges externes",
+        "type": "Fonctionnement"
+    },
+    "R210": {
+        "code": "R210",
+        "libelle": "Salaires et rémunérations",
+        "type": "Fonctionnement"
+    },
+    "R215": {
+        "code": "R215",
+        "libelle": "Charges sociales",
+        "type": "Fonctionnement"
+    },
+    "R225": {
+        "code": "R225",
+        "libelle": "Autres charges de fonctionnement",
+        "type": "Fonctionnement"
+    },
+    "R305": {
+        "code": "R305",
+        "libelle": "Ménages",
+        "type": "Fonctionnement"
+    },
+    "R310": {
+        "code": "R310",
+        "libelle": "Personnes morales de droit privé",
+        "type": "Fonctionnement"
+    },
+    "R315": {
+        "code": "R315",
+        "libelle": "Collectivités territoriales",
+        "type": "Fonctionnement"
+    },
+    "R320": {
+        "code": "R320",
+        "libelle": "Autres organismes publics",
+        "type": "Fonctionnement"
+    },
+    "R325": {
+        "code": "R325",
+        "libelle": "Établissements d'enseignement",
+        "type": "Fonctionnement"
+    },
+    "R330": {
+        "code": "R330",
+        "libelle": "Autres charges",
+        "type": "Fonctionnement"
+    },
+    "R515": {
+        "code": "R515",
+        "libelle": "Autres charges financières",
+        "type": "Fonctionnement"
+    }
+}

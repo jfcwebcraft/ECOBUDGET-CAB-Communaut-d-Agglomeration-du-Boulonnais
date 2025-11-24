@@ -1,6 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from app.services.pdf_extractor import extract_lines_from_pdf
 from app.services.llm_classifier_ollama import classify_lines_with_ollama
+from app.services.agregats_reference import get_agregats_reference
 import shutil
 import os
 
@@ -46,5 +47,6 @@ async def analyze_invoice(file: UploadFile = File(...)):
         "total_budget_vert": round(total_vert, 2),
         "pourcentage_budget_vert": round(part_verte, 1),
         "lignes": classified_lines,
-        "metadata": metadata
+        "metadata": metadata,
+        "agregats_reference": get_agregats_reference()
     }

@@ -29,7 +29,7 @@ Vous devriez voir `mistral-nemo` dans la liste.
 
 ---
 
-### 2. Redéployer l'application avec le nouveau code (2 min)
+### 2. Redéployer l'application (Backend + Frontend) (3 min)
 
 **Sur le terminal VPS :**
 
@@ -40,21 +40,18 @@ docker-compose down
 docker-compose up -d --build
 ```
 
-> ⏳ **Temps estimé** : 1-2 minutes (rebuild backend uniquement)
+> ⏳ **Temps estimé** : 2-3 minutes (rebuild frontend + backend)
 
 ---
 
-### 3. Tester l'endpoint d'analyse (1 min)
+### 3. Tester l'interface complète (1 min)
 
-#### Option A : Via Swagger UI (Interface graphique)
+1. Allez sur **http://168.231.77.11:5173**
+2. Vous devriez voir la nouvelle interface "ECOBUDGET-CAB" avec la zone d'upload verte.
+3. Glissez-déposez un PDF.
+4. Admirez le résultat : tableau analysé, totaux calculés, badges "VERT" ou "NON".
 
-1. Allez sur http://168.231.77.11:8000/docs
-2. Cherchez `POST /api/v1/analyze`
-3. Cliquez sur "Try it out"
-4. Uploadez un fichier PDF de test
-5. Cliquez sur "Execute"
-
-#### Option B : Ligne de commande (pour les tests rapides)
+#### Option B : Test API seul (si besoin)
 
 ```bash
 # Depuis votre PC (PowerShell)
@@ -135,6 +132,20 @@ docker logs ecobudget-cab-communaut-d-agglomeration-du-boulonnais_backend_1
 ### L'endpoint /analyze n'existe pas
 - Vérifiez que `git pull` a bien récupéré les nouveaux fichiers
 - Relancez `docker-compose up -d --build`
+
+### Erreur "KeyError: 'ContainerConfig'"
+C'est un bug connu des vieilles versions de `docker-compose`.
+Solution radicale (si la suppression simple échoue) :
+```bash
+cd /root/ECOBUDGET-CAB-Communaut-d-Agglomeration-du-Boulonnais
+# Lister tous les conteneurs (même arrêtés) pour trouver le fautif
+docker ps -a | grep frontend
+# Supprimer par ID (remplacez CONTAINER_ID par l'ID trouvé)
+docker rm -f CONTAINER_ID
+# OU supprimer tous les conteneurs du projet pour repartir propre
+docker-compose down --remove-orphans
+docker-compose up -d --build
+```
 
 ---
 
