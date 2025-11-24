@@ -36,7 +36,7 @@ function App() {
                 </div>
                 <div className="text-right hidden md:block">
                     <p className="text-sm text-gray-400">Version Bêta 0.2</p>
-                    <p className="text-xs text-gray-300">Propulsé par Ollama Phi-3</p>
+                    <p className="text-xs text-gray-300">Propulsé par Ollama Mistral</p>
                 </div>
             </header>
 
@@ -46,6 +46,20 @@ function App() {
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         {error}
                     </div>
+                )}
+
+                {!result ? (
+                    <div className="animate-fade-in-up">
+                        <div className="text-center mb-10">
+                            <h2 className="text-2xl font-semibold text-gray-800 mb-3">Analysez vos devis en un clic</h2>
+                            <p className="text-gray-500 max-w-lg mx-auto">
+                                Déposez un devis PDF pour identifier automatiquement les dépenses éligibles au budget vert selon la taxonomie 2025.
+                            </p>
+                        </div>
+                        <UploadZone onFileSelect={handleFileSelect} isAnalyzing={isAnalyzing} />
+                    </div>
+                ) : (
+                    <AnalysisResultTable result={result} onReset={handleReset} />
                 )}
             </main>
         </div>
