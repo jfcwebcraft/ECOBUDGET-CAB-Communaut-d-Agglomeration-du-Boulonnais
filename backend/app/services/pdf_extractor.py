@@ -42,6 +42,11 @@ def extract_lines_from_pdf(filepath: str) -> List[Dict[str, any]]:
                             designation = " ".join([c for c in row if c and c != cell][:4])
                             break
                     if amount and designation:
+                        # Filtrer les lignes de totaux
+                        designation_lower = designation.lower()
+                        if any(keyword in designation_lower for keyword in ['total', 'sous-total', 'subtotal', 'montant total', 'ttc', 'tva']):
+                            continue
+                        
                         lines.append({
                             "designation": designation.strip()[:200],
                             "montant_ht": amount
@@ -56,6 +61,10 @@ def extract_lines_from_pdf(filepath: str) -> List[Dict[str, any]]:
                             amount = clean_amount(line)
                             if amount and amount > 50:
                                 clean_line = re.sub(r'[\d\.,\s€]+', '', line)[:150]
+                                # Filtrer les lignes de totaux
+                                if any(keyword in clean_line.lower() for keyword in ['total', 'sous-total', 'subtotal', 'montant total', 'ttc', 'tva']):
+                                    continue
+                                
                                 lines.append({
                                     "designation": clean_line.strip(),
                                     "montant_ht": amount
