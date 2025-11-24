@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import upload, analyze
+from app.routers import analyze
 
 app = FastAPI(title="ECOBUDGET-CAB API")
 
