@@ -117,12 +117,17 @@ RÈGLES :
 - EXCLURE : climatisation, gazon synthétique, véhicule thermique, désherbant
 - N'inclure que les dépenses DIRECTEMENT favorables climat/biodiversité
 
-Réponds UNIQUEMENT JSON :
+Réponds UNIQUEMENT par un objet JSON (pas de liste) :
 
-[
-  {"ligne":"Isolation...","montant_ht":1500,"budget_vert":true,"axe":"Axe 1","code_categorie":"A125","confiance":0.9,"explication":"Rénovation thermique"},
-  {"ligne":"Peinture...","montant_ht":500,"budget_vert":false,"axe":null,"code_categorie":"R205","confiance":1.0,"explication":"Entretien standard"}
-]
+{
+  "ligne": "Isolation...",
+  "montant_ht": 1500,
+  "budget_vert": true,
+  "axe": "Axe 1",
+  "code_categorie": "A125",
+  "confiance": 0.9,
+  "explication": "Rénovation thermique"
+}
 """
 
 import time
@@ -179,11 +184,24 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> Dict:
                 print(content)
                 print("------------------------------------------")
 
-                # Extraction du JSON
-                json_match_obj = re.search(r'\{.*\}', content, re.DOTALL)
-                
-                if json_match_obj:
-                    result = json.loads(json_match_obj.group(0))
+                # Tentative d'extraction du JSON
+                result = None
+                try:
+                    # Essayer de parser directement
+                    result = json.loads(content)
+                except json.JSONDecodeError:
+                    # Si échec, essayer de trouver un objet JSON avec regex
+                    json_match = re.search(r'\{.*\}', content, re.DOTALL)
+                    if json_match:
+                        try:
+                            result = json.loads(json_match.group(0))
+                        except:
+                            pass
+
+                if result:
+                    # Si le résultat est une liste (ancien format), prendre le premier élément
+                    if isinstance(result, list) and len(result) > 0:
+                        result = result[0]
                     
                     # Normalisation
                     result.setdefault("ligne", line['designation'])
@@ -193,6 +211,20 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> Dict:
                     result.setdefault("axe", None)
                     result.setdefault("confiance", 0.0)
                     result.setdefault("explication", "Non classifié")
+                    
+                    # Nettoyage du code catégorie
+                    if result.get("code_categorie"):
+                        code = str(result["code_categorie"]).strip().upper()
+                        # Garder seulement si format valide (A ou R suivi de chiffres)
+                        if re.match(r'^[AR]\d+$', code):
+                            result["code_categorie"] = code
+                        else:
+                            # Essayer d'extraire le code si mélangé avec du texte (ex: "A125 - Constructions")
+                            match_code = re.search(r'([AR]\d+)', code)
+                            if match_code:
+                                result["code_categorie"] = match_code.group(1)
+                            else:
+                                result["code_categorie"] = None
                     
                     all_results.append(result)
                 else:
@@ -205,7 +237,7 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> Dict:
                         "axe": None,
                         "code_categorie": None,
                         "confiance": 0.0,
-                        "explication": "Erreur IA – à vérifier manuellement"
+                        "explication": "Erreur IA – format invalide"
                     })
                     
             except Exception as e:

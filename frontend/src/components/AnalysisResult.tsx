@@ -39,7 +39,7 @@ interface AnalysisResultProps {
 
 const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
     // État local pour afficher/masquer la référence des agrégats
-    const [showReference, setShowReference] = useState<boolean>(false);
+
     // État local pour gérer les modifications d'agrégats
     const [editedLines, setEditedLines] = useState<AnalysisLine[]>(result.lignes);
     const [modifiedIndices, setModifiedIndices] = useState<Set<number>>(new Set());
@@ -124,8 +124,8 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
                                     <span className="text-gray-600">—</span>
                                     <span className="text-gray-800">{ag.libelle}</span>
                                     <span className={`ml-auto text-xs px-2 py-0.5 rounded ${ag.type === 'Investissement'
-                                            ? 'bg-green-100 text-green-700'
-                                            : 'bg-orange-100 text-orange-700'
+                                        ? 'bg-green-100 text-green-700'
+                                        : 'bg-orange-100 text-orange-700'
                                         }`}>
                                         {ag.type}
                                     </span>
