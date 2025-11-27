@@ -1,28 +1,55 @@
-version: '3.9'
+version: '3.8'
+
 services:
-  ollama:
-    image: ollama/ollama:latest
-    ports: [ "11435:11434" ]
-    volumes: [ "./ollama_models:/root/.ollama" ]
-    restart: unless-stopped
+  db:
+    image: pgvector/pgvector:pg15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ecobudget
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - ecobudget-net
 
   backend:
     build: ./backend
-    ports: [ "8000:8000" ]
-    depends_on: [ ollama ]
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - ./backend:/app
-      - ./data:/data
-    environment: [ "OLLAMA_HOST=http://ollama:11434" ]
-    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/ecobudget
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    depends_on:
+      - db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - ecobudget-net
 
   frontend:
     build: ./frontend
-    ports: [ "5173:5173" ]
-    depends_on: [ backend ]
+    command: npm run dev -- --host
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    ports:
+      - "5173:5173"
     environment:
-      - VITE_API_URL=http://168.231.77.11:8000/api/v1
-    restart: unless-stopped
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - ecobudget-net
+
+networks:
+  ecobudget-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

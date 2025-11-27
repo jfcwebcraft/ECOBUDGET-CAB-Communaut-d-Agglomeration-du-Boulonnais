@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { updateLine } from '../services/api';
 
 interface AnalysisLine {
     ligne: string;
@@ -8,6 +9,14 @@ interface AnalysisLine {
     axe: string | null;
     confiance: number;
     explication: string;
+    exercice?: number;
+    num_bordereau?: string;
+    num_piece?: string;
+    statut?: string;
+    cotation_axe1?: string;
+    cotation_axe6?: string;
+    rubrique_axe1?: string;
+    rubrique_axe6?: string;
 }
 
 interface AgregatReference {
@@ -65,7 +74,47 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
         ? Object.values(result.agregats_reference).sort((a, b) => a.code.localeCompare(b.code))
         : [];
 
-    return (
+    const [editingIndex, setEditingIndex] = useState<number | null>(null);
+    const [edition, setEdition] = useState<any>({});
+
+    const openEdit = (index: number) => {
+        setEditingIndex(index);
+        setEdition({
+            cotation_axe1: editedLines[index].budget_vert ? 'Favorable' : 'Défavorable',
+            cotation_axe6: editedLines[index].axe === 'Axe 6' && editedLines[index].budget_vert ? 'Favorable' : 'Défavorable',
+            commentaire_agent: editedLines[index].explication || ''
+        });
+    };
+
+    const applyValidation = async (index: number) => {
+        const line = editedLines[index];
+        try {
+            await updateLine(line['exercice'] || 0, line['num_bordereau'] || '', line['num_piece'] || '', { statut: 'VALIDE' });
+            const newLines = [...editedLines];
+            newLines[index] = { ...newLines[index], statut: 'VALIDE' } as any;
+            setEditedLines(newLines);
+        } catch (e) {
+            console.error('Erreur valider', e);
+        }
+    };
+
+    const applyEdition = async () => {
+        if (editingIndex === null) return;
+        const line = editedLines[editingIndex];
+        try {
+            await updateLine(line['exercice'] || 0, line['num_bordereau'] || '', line['num_piece'] || '', edition);
+            const newLines = [...editedLines];
+            newLines[editingIndex] = { ...newLines[editingIndex], ...edition } as any;
+            setEditedLines(newLines);
+            setEditingIndex(null);
+        } catch (e) {
+            console.error('Erreur appliquer édition', e);
+        }
+    };
+
+    const closeEdit = () => { setEditingIndex(null); setEdition({}); };
+
+    return (<>
         <div className="w-full max-w-6xl mx-auto mt-8 animate-fade-in">
             {/* En-tête des résultats */}
             <div className="bg-white rounded-xl shadow-sm p-6 mb-6 border border-gray-100">
@@ -147,6 +196,7 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
                                 <th className="p-4 text-center">Statut</th>
                                 <th className="p-4">Catégorie</th>
                                 <th className="p-4">Explication IA</th>
+                                <th className="p-4">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
@@ -157,12 +207,14 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
                                         {line.montant_ht.toLocaleString('fr-FR')} €
                                     </td>
                                     <td className="p-4 text-center">
-                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${line.budget_vert
-                                            ? "bg-green-100 text-green-800"
-                                            : "bg-gray-100 text-gray-800"
-                                            }`}>
-                                            {line.budget_vert ? "VERT" : "NON"}
-                                        </span>
+                                        {(() => {
+                                            const cot = (line.cotation_axe1 || line.cotation_axe6) || (line.budget_vert ? 'Favorable' : 'Défavorable');
+                                            const label = cot === 'Favorable' ? 'Favorable' : cot === 'Défavorable' ? 'Défavorable' : cot === 'NEUTRE' ? 'Neutre' : 'A approfondir';
+                                            const cls = cot === 'Favorable' ? 'bg-green-100 text-green-800' : cot === 'Défavorable' ? 'bg-red-100 text-red-800' : cot === 'NEUTRE' ? 'bg-gray-100 text-gray-800' : 'bg-yellow-100 text-yellow-800';
+                                            return (
+                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${cls}`}>{label}</span>
+                                            );
+                                        })()}
                                     </td>
                                     <td className="p-4 text-sm">
                                         <div className="relative">
@@ -194,6 +246,12 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
                                     </td>
                                     <td className="p-4 text-sm text-gray-500 italic max-w-xs truncate" title={line.explication}>
                                         {line.explication}
+                                    </td>
+                                    <td className="p-4 text-right">
+                                        <div className="flex items-center gap-2 justify-end">
+                                            <button onClick={() => applyValidation(index)} className="px-2 py-1 text-xs rounded bg-green-50 text-green-700 border border-green-200">Valider</button>
+                                            <button onClick={() => openEdit(index)} className="px-2 py-1 text-xs rounded bg-yellow-50 text-yellow-700 border border-yellow-200">Corriger</button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
@@ -228,7 +286,40 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({ result, onReset }) => {
                 </div>
             </div>
         </div>
-    );
+
+        {/* Edit Modal (simple) */}
+        {editingIndex !== null && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black/30 p-4">
+                <div className="bg-white rounded-lg p-6 shadow-lg max-w-lg w-full">
+                    <h3 className="text-lg font-semibold">Corriger la ligne</h3>
+                    <div className="mt-4 grid grid-cols-1 gap-2">
+                        <label className="text-sm text-gray-600">Cotation Axe 1</label>
+                        <select value={edition.cotation_axe1} onChange={(e) => setEdition({ ...edition, cotation_axe1: e.target.value })} className="px-2 py-2 border rounded">
+                            <option value="NEUTRE">NEUTRE</option>
+                            <option value="Favorable">Favorable</option>
+                            <option value="Défavorable">Défavorable</option>
+                            <option value="A_APPROFONDIR">A_APPROFONDIR</option>
+                        </select>
+
+                        <label className="text-sm text-gray-600">Cotation Axe 6</label>
+                        <select value={edition.cotation_axe6} onChange={(e) => setEdition({ ...edition, cotation_axe6: e.target.value })} className="px-2 py-2 border rounded">
+                            <option value="NEUTRE">NEUTRE</option>
+                            <option value="Favorable">Favorable</option>
+                            <option value="Défavorable">Défavorable</option>
+                            <option value="A_APPROFONDIR">A_APPROFONDIR</option>
+                        </select>
+
+                        <label className="text-sm text-gray-600">Commentaire</label>
+                        <textarea value={edition.commentaire_agent || ''} onChange={(e) => setEdition({ ...edition, commentaire_agent: e.target.value })} className="px-2 py-2 border rounded h-24" />
+                    </div>
+                    <div className="mt-4 flex justify-end gap-2">
+                        <button onClick={closeEdit} className="px-3 py-2 rounded border bg-gray-100">Annuler</button>
+                        <button onClick={applyEdition} className="px-3 py-2 rounded bg-blue-600 text-white">Appliquer</button>
+                    </div>
+                </div>
+            </div>
+        )}
+    </>);
 };
 
 export default AnalysisResult;

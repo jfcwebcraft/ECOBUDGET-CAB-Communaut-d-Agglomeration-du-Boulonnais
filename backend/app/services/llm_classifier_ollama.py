@@ -1,133 +1,33 @@
-import httpx
-import json
-import re
-import traceback
-from typing import List, Dict
-
-SYSTEM_PROMPT = """Tu es un expert en classification "Budget Vert" pour une collectivité.
-Analyse chaque ligne et attribue :
-1. budget_vert (true/false)
-2. axe (Axe 1 à 6)
-3. code_categorie (Axxx ou Rxxx)
-
-AXES :
-- Axe 1 : Atténuation climat (Isolation, Solaire, Véhicule électrique)
-- Axe 2 : Adaptation climat (Végétalisation, Eau)
-- Axe 3 : Eau (Récupération, Assainissement)
-- Axe 4 : Économie circulaire (Compost, Réemploi)
-- Axe 5 : Pollution (LED, Air)
-- Axe 6 : Biodiversité (Plantation, Espaces verts)
-
-CODES AGRÉGATS :
-- A105 : Subventions d'investissement versées
-- A110 : Autres immobilisations incorporelles
-- A115 : Immobilisations incorporelles en cours
-- A120 : Terrains
-- A125 : Constructions
-- A130 : Réseaux et installations de voirie
-- A135 : Réseaux divers
-- A140 : Installations techniques, agencements et matériel
-- A145 : Immobilisations mises en concessions ou affermées
-- A150 : Autres
-- A155 : Immobilisations corporelles en cours
-- A165 : IMMOBILISATIONS FINANCIÈRES
-- A225 : Créances correspondant à des opérations pour compte de tiers
-- R105 : Dotations de l'état
-- R115 : Compensations, autres attributions et autres participations
-- R130 : Ventes de biens ou prestations de services
-- R205 : Achats et charges externes
-- R210 : Salaires et rémunérations
-- R215 : Charges sociales
-- R225 : Autres charges de fonctionnement
-- R305 : Ménages
-- R310 : Personnes morales de droit privé
-- R315 : Collectivités territoriales
-- R320 : Autres organismes publics
-- R325 : Établissements d'enseignement
-- R330 : Autres charges
-- R515 : Autres charges financières
-
-RÈGLES :
-- Tu DOIS traiter CHAQUE ligne
-- Doute → budget_vert = false
-- EXCLURE : climatisation, gazon synthétique, véhicule thermique, désherbant
-- N'inclure que les dépenses DIRECTEMENT favorables climat/biodiversité
-
-Réponds UNIQUEMENT JSON :
-
-[
-  {"ligne":"Isolation...","montant_ht":1500,"budget_vert":true,"axe":"Axe 1","code_categorie":"A125","confiance":0.9,"explication":"Rénovation thermique"},
-  {"ligne":"Peinture...","montant_ht":500,"budget_vert":false,"axe":null,"code_categorie":"R205","confiance":1.0,"explication":"Entretien standard"}
-]
-"""
-
+import os
 import time
-import httpx
 import json
 import re
+import httpx
 import traceback
 from typing import List, Dict
 
-SYSTEM_PROMPT = """Tu es un expert en classification "Budget Vert" pour une collectivité.
-Analyse chaque ligne et attribue :
-1. budget_vert (true/false)
-2. axe (Axe 1 à 6)
-3. code_categorie (Axxx ou Rxxx)
+SYSTEM_PROMPT = """Tu es un expert en finances publiques. Analyse cette dépense pour le Budget Vert.
+Si le libellé est vague, classe en 'A_APPROFONDIR' et pose une question dans le champ justification.
 
-AXES :
-- Axe 1 : Atténuation climat (Isolation, Solaire, Véhicule électrique)
-- Axe 2 : Adaptation climat (Végétalisation, Eau)
-- Axe 3 : Eau (Récupération, Assainissement)
-- Axe 4 : Économie circulaire (Compost, Réemploi)
-- Axe 5 : Pollution (LED, Air)
-- Axe 6 : Biodiversité (Plantation, Espaces verts)
-
-CODES AGRÉGATS :
-- A105 : Subventions d'investissement versées
-- A110 : Autres immobilisations incorporelles
-- A115 : Immobilisations incorporelles en cours
-- A120 : Terrains
-- A125 : Constructions
-- A130 : Réseaux et installations de voirie
-- A135 : Réseaux divers
-- A140 : Installations techniques, agencements et matériel
-- A145 : Immobilisations mises en concessions ou affermées
-- A150 : Autres
-- A155 : Immobilisations corporelles en cours
-- A165 : IMMOBILISATIONS FINANCIÈRES
-- A225 : Créances correspondant à des opérations pour compte de tiers
-- R105 : Dotations de l'état
-- R115 : Compensations, autres attributions et autres participations
-- R130 : Ventes de biens ou prestations de services
-- R205 : Achats et charges externes
-- R210 : Salaires et rémunérations
-- R215 : Charges sociales
-- R225 : Autres charges de fonctionnement
-- R305 : Ménages
-- R310 : Personnes morales de droit privé
-- R315 : Collectivités territoriales
-- R320 : Autres organismes publics
-- R325 : Établissements d'enseignement
-- R330 : Autres charges
-- R515 : Autres charges financières
+Tu dois renvoyer un objet JSON unique contenant :
+                designation = line.get('designation') or line.get('libelle') or ''
+                user_message = f"Analyse cette ligne de devis :\n\n{designation} | {line.get('montant_ht')} € HT"
+- montant_ht (number)
+- budget_vert (true/false)
+- axe ("Axe 1".."Axe 6" | null)
+- code_categorie (Axxx ou Rxxx | null)
+- confiance (0.0..1.0)
+- explication (string)
 
 RÈGLES :
-- Tu DOIS traiter CHAQUE ligne
+- Traite CHAQUE ligne
 - Doute → budget_vert = false
 - EXCLURE : climatisation, gazon synthétique, véhicule thermique, désherbant
 - N'inclure que les dépenses DIRECTEMENT favorables climat/biodiversité
 
-Réponds UNIQUEMENT par un objet JSON (pas de liste) :
-
-{
-  "ligne": "Isolation...",
-  "montant_ht": 1500,
-  "budget_vert": true,
-  "axe": "Axe 1",
-  "code_categorie": "A125",
-  "confiance": 0.9,
-  "explication": "Rénovation thermique"
-}
+Contrainte : réponds uniquement par un objet JSON (strict) sans autre texte.
+Exemple de sortie :
+{"ligne":"Isolation...","montant_ht":1500,"budget_vert":true,"axe":"Axe 1","code_categorie":"A125","confiance":0.9,"explication":"Rénovation thermique"}
 """
 
 import time
@@ -136,8 +36,8 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> Dict:
     if not lines:
         return {"results": [], "metadata": {}}
 
-    start_time = time.time()
-    all_results = []
+                        "ligne": designation,
+                        "montant_ht": line.get('montant_ht'),
     
     # Traiter chaque ligne individuellement pour éviter le timeout
     async with httpx.AsyncClient(timeout=180.0) as client:
@@ -146,8 +46,9 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> Dict:
                 user_message = f"Analyse cette ligne de devis :\n\n{line['designation']} | {line['montant_ht']} € HT"
                 
                 print(f"--- ENVOI OLLAMA (ligne {i}/{len(lines)}) ---")
-                resp = await client.post(
-                    "http://ollama:11434/api/chat",
+                ollama_url = os.getenv('OLLAMA_URL', 'http://ollama:11434')
+                content = resp.json().get("message", {}).get("content", "")
+                    f"{ollama_url}/api/chat",
                     json={
                         "model": "mistral",
                         "messages": [
@@ -199,8 +100,8 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> Dict:
                             pass
 
                 if result:
-                    # Si le résultat est une liste (ancien format), prendre le premier élément
-                    if isinstance(result, list) and len(result) > 0:
+                        "ligne": designation,
+                        "montant_ht": line.get('montant_ht'),
                         result = result[0]
                     
                     # Normalisation
@@ -212,8 +113,8 @@ async def classify_lines_with_ollama(lines: List[Dict]) -> Dict:
                     result.setdefault("confiance", 0.0)
                     result.setdefault("explication", "Non classifié")
                     
-                    # Nettoyage du code catégorie
-                    if result.get("code_categorie"):
+                    "ligne": designation,
+                    "montant_ht": line.get('montant_ht'),
                         code = str(result["code_categorie"]).strip().upper()
                         # Garder seulement si format valide (A ou R suivi de chiffres)
                         if re.match(r'^[AR]\d+$', code):

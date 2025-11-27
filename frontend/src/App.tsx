@@ -1,66 +1,109 @@
-import { useState } from 'react';
-import UploadZone from './components/UploadZone';
-import AnalysisResultTable from './components/AnalysisResult';
-import { analyzeDevis, AnalysisResult } from './services/api';
+import { useState, useEffect } from 'react';
+import { FileUpload } from './components/FileUpload';
+import { BudgetTable } from './components/BudgetTable';
+import { CorrectionModal } from './components/CorrectionModal';
+import { uploadFile, getBudgetLines, updateBudgetLine } from './api';
+import * as styles from './styles.css';
 
 function App() {
-    const [isAnalyzing, setIsAnalyzing] = useState(false);
-    const [result, setResult] = useState<AnalysisResult | null>(null);
+    const [data, setData] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentLine, setCurrentLine] = useState<any>(null);
 
-    const handleFileSelect = async (file: File) => {
-        setIsAnalyzing(true);
-        setError(null);
+    const fetchData = async () => {
         try {
-            const data = await analyzeDevis(file);
-            setResult(data);
+            const result = await getBudgetLines();
+            setData(result);
         } catch (err) {
-            console.error(err);
-            setError("Une erreur est survenue lors de l'analyse du fichier. Vérifiez que le backend est bien lancé.");
-        } finally {
-            setIsAnalyzing(false);
+            console.error("Failed to fetch budget lines", err);
         }
     };
 
-    const handleReset = () => {
-        setResult(null);
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const handleFileSelect = async (file: File) => {
+        setIsLoading(true);
         setError(null);
+        try {
+            await uploadFile(file);
+            await fetchData();
+        } catch (err: any) {
+            console.error(err);
+            setError(err.response?.data?.detail || "Une erreur est survenue lors de l'upload.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleValidate = async (index: number) => {
+        const line = data[index];
+        try {
+            await updateBudgetLine(line.exercice, line.num_bordereau, line.num_piece, {
+                statut: 'VALIDE'
+            });
+            // Optimistic update or refetch
+            const newData = [...data];
+            newData[index].statut = 'VALIDE';
+            setData(newData);
+        } catch (err) {
+            console.error("Failed to validate line", err);
+            alert("Erreur lors de la validation");
+        }
+    };
+
+    const handleCorrect = (index: number) => {
+        setCurrentLine(data[index]);
+        setIsModalOpen(true);
+    };
+
+    const handleSaveCorrection = async (updatedData: any) => {
+        if (!currentLine) return;
+        try {
+            await updateBudgetLine(currentLine.exercice, currentLine.num_bordereau, currentLine.num_piece, {
+                ...updatedData,
+                statut: 'VALIDE' // Or 'CORRIGE' if preferred, but user flow suggests validation after correction
+            });
+            setIsModalOpen(false);
+            setCurrentLine(null);
+            await fetchData(); // Refetch to get updated data
+        } catch (err) {
+            console.error("Failed to save correction", err);
+            alert("Erreur lors de la sauvegarde");
+        }
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 p-8 font-sans text-gray-900">
-            <header className="max-w-6xl mx-auto mb-12 flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold text-green-800 tracking-tight">ECOBUDGET-CAB</h1>
-                    <p className="text-gray-500 mt-1">Outil d'analyse budgétaire vert & bas carbone</p>
-                </div>
-                <div className="text-right hidden md:block">
-                    <p className="text-sm text-gray-400">Version Bêta 0.2</p>
-                    <p className="text-xs text-gray-300">Propulsé par Ollama Mistral</p>
-                </div>
+        <div className={styles.container}>
+            <header className={styles.header}>
+                <h1 className={styles.title}>EcoBudget Assistant</h1>
+                <p className={styles.subtitle}>Analyse et classification automatique des dépenses (Budget Vert)</p>
             </header>
 
-            <main className="max-w-6xl mx-auto">
+            <main>
+                <FileUpload onFileSelect={handleFileSelect} isLoading={isLoading} />
+
                 {error && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg flex items-center gap-3">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>
                         {error}
                     </div>
                 )}
 
-                {!result ? (
-                    <div className="animate-fade-in-up">
-                        <div className="text-center mb-10">
-                            <h2 className="text-2xl font-semibold text-gray-800 mb-3">Analysez vos devis en un clic</h2>
-                            <p className="text-gray-500 max-w-lg mx-auto">
-                                Déposez un devis PDF pour identifier automatiquement les dépenses éligibles au budget vert selon la taxonomie 2025.
-                            </p>
-                        </div>
-                        <UploadZone onFileSelect={handleFileSelect} isAnalyzing={isAnalyzing} />
-                    </div>
-                ) : (
-                    <AnalysisResultTable result={result} onReset={handleReset} />
-                )}
+                <BudgetTable
+                    data={data}
+                    onValidate={handleValidate}
+                    onCorrect={handleCorrect}
+                />
+
+                <CorrectionModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    onSave={handleSaveCorrection}
+                    initialData={currentLine}
+                />
             </main>
         </div>
     );

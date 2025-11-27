@@ -52,7 +52,7 @@ const UploadZone: React.FC<UploadZoneProps> = ({ onFileSelect, isAnalyzing }) =>
                 ref={inputRef}
                 type="file"
                 className="hidden"
-                accept=".pdf"
+                accept=".pdf,.xlsx,.xls,.csv"
                 onChange={handleChange}
             />
 
@@ -65,14 +65,14 @@ const UploadZone: React.FC<UploadZoneProps> = ({ onFileSelect, isAnalyzing }) =>
 
                 <div>
                     <h3 className="text-lg font-semibold text-gray-700">
-                        {isAnalyzing ? "Analyse en cours..." : "Déposez votre devis PDF ici"}
+                        {isAnalyzing ? "Analyse en cours..." : "Déposez votre devis (PDF/XLSX/CSV) ici"}
                     </h3>
                     <p className="text-sm text-gray-500 mt-1">
                         ou <button onClick={onButtonClick} className="text-green-600 font-medium hover:underline">parcourez vos fichiers</button>
                     </p>
                 </div>
 
-                <p className="text-xs text-gray-400">PDF uniquement (max 10MB)</p>
+                <p className="text-xs text-gray-400">PDF / Excel / CSV (max 10MB)</p>
             </div>
         </div>
     );

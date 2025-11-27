@@ -1,8 +1,15 @@
 fastapi
 uvicorn
 python-multipart
-pdfplumber
-pymupdf
 httpx
 pydantic
 pydantic-settings
+pytest
+pytest-asyncio
+requests
+psycopg2-binary
+pandas
+openpyxl
+sqlalchemy
+alembic
+python-dotenv

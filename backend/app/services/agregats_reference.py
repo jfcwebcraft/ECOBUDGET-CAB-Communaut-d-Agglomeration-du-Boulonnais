@@ -3,7 +3,7 @@ import os
 from typing import Dict
 
 # Charger la référence des agrégats
-AGREGATS_FILE = os.path.join(os.path.dirname(__file__), "../data/agregats_reference.json")
+AGREGATS_FILE = os.path.join(os.path.dirname(__file__), "../../data/agregats_reference.json")
 
 def get_agregats_reference() -> Dict:
     """Retourne la liste complète des agrégats avec leurs libellés"""
